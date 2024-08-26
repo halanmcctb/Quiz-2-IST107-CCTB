@@ -149,7 +149,8 @@ Instructor: Washington Valencia
 
 									<a class="nav-link" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
 										aria-expanded="false" id="mainNavHosting">
-										<h3>Quiz #2 - IST 107 - <span class="text-danger">{{Replace with your Full
+										<h3>Quiz #2 - IST 107 - <span class="text-danger" id="full_name">{{Replace with
+												your Full
 												Name}}</span>
 										</h3>
 									</a>
@@ -177,7 +178,7 @@ Instructor: Washington Valencia
 									<i class="fi fi-users m-0-xs"></i>
 
 									<!-- hide text on mobile, keep the icon (space issue reason) -->
-									<span class="d-none d-lg-inline-block">Change my name</span>
+									<span class="d-none d-lg-inline-block" id="change_name">Change my name</span>
 								</a>
 							</li>
 
@@ -221,8 +222,8 @@ Instructor: Washington Valencia
 							</p><br><br>
 
 							<div class="mt-15 text-muted">
-								<h2>{{Replace with current date}} </h2>
-								<h2>{{Replace with your email}} </h2>
+								<h2 id="current_date">{{Replace with current date}} </h2>
+								<h2 id="email">{{Replace with your email}} </h2>
 							</div>
 
 						</div>
@@ -259,7 +260,7 @@ Instructor: Washington Valencia
 					<h2 class="h5 mb-1">
 						<span class="text-primary fw-bold">HTTP</span> <span class="fw-light">protocol</span>
 					</h2>
-					<p class="m-0">xx port / Layer 7</p>
+					<p class="m-0">80 port / Layer 7</p>
 
 				</div>
 
@@ -269,7 +270,7 @@ Instructor: Washington Valencia
 					<h2 class="h5 mb-1">
 						<span class="text-danger fw-bold">HTTPS</span> <span class="fw-light">protocol</span>
 					</h2>
-					<p class="m-0">xx port / Layer 7</p>
+					<p class="m-0">443 port / Layer 7</p>
 
 				</div>
 
@@ -279,7 +280,7 @@ Instructor: Washington Valencia
 					<h2 class="h5 mb-1">
 						<span class="text-warning fw-bold">SSH</span> <span class="fw-light">protocol</span>
 					</h2>
-					<p class="m-0">xx port / layer 7</p>
+					<p class="m-0">22 port / layer 7</p>
 
 				</div>
 
@@ -289,7 +290,7 @@ Instructor: Washington Valencia
 					<h2 class="h5 mb-1">
 						<span class="text-success fw-bold">DNS</span> <span class="fw-light">protocol</span>
 					</h2>
-					<p class="m-0">xx port / layer 7</p>
+					<p class="m-0">53 port / layer 7</p>
 
 				</div>
 
@@ -430,7 +431,7 @@ Instructor: Washington Valencia
 
 
 					<div class="col-12 col-lg-6 mb-5 aos-init aos-animate" data-aos="fade-up" data-aos-delay="0"
-						data-aos-offset="0">
+						data-aos-offset="0" id="item_list">
 
 						<h2 class="fw-bold mb-5">
 							List of <span class="text-primary fw-medium">Items</span>
@@ -508,7 +509,8 @@ Instructor: Washington Valencia
 						</div>
 
 						<div class="text-align-end">
-							<a href="#" class="btn btn-primary btn-soft">How many items would you like in
+							<a href="#" class="btn btn-primary btn-soft" id="change_items">How many items would you like
+								in
 								the list?</a>
 						</div>
 
@@ -529,6 +531,102 @@ Instructor: Washington Valencia
 	<!-- /block : services -->
 	</div><!-- /#wrapper -->
 	<script src="assets/js/core.min.js"></script>
+
+	<script>
+		$("#full_name").html("Halan Cristian Marques")
+
+		const changeName = () => {
+			const full_name = prompt("Type your name")
+
+			if (!full_name || full_name == "") {
+				alert("Invalid name")
+
+				changeName()
+				return
+			}
+
+
+			$("#full_name").html(full_name)
+		}
+
+		$("#change_name").on("click", () => {
+			changeName()
+		})
+
+		const changeItems = () => {
+			const items = prompt("How many items would you like in the list?")
+
+			if (isNaN(items)) {
+				alert("Invalid number")
+
+				changeItems()
+				return
+			}
+
+			if (items <= 0) {
+				alert("Should have at least 1 item")
+
+				changeItems()
+				return
+			}
+
+			if (items > 10) {
+				alert("Should not have more than 10 items")
+
+				changeItems()
+				return
+			}
+
+			let list_html = `
+				<h2 class="fw-bold mb-5">
+					List of <span class="text-primary fw-medium">Items</span>
+				</h2>
+			`
+
+			for (i = 1; i <= items; i++) {
+				list_html += `
+					<div class="d-flex mb-4">
+						<!-- icon -->
+						<div class="text-primary">
+							<img width="40" height="20" src="demo.files/svg/various/line-chart.svg" alt="...">
+						</div>
+
+						<div class="mx-2">
+
+							<!-- heading -->
+							<h3 class="h5 fw-bold mb-1">
+								Item #${i}
+							</h3>
+
+							<!-- text -->
+							<p>
+								This is item #${i}.
+							</p>
+						</div>
+					</div>
+				`
+			}
+
+			list_html += `
+			<div class="text-align-end">
+				<a href="#" class="btn btn-primary btn-soft" id="change_items">How many items would you like in the list?</a>
+			</div></div>
+			`
+
+			$("#item_list").html(list_html)
+		}
+
+		$("#change_items").on("click", () => {
+			changeItems()
+		})
+
+		$(document).ready(function () {
+			const date = new Date().toLocaleString("en-US")
+			$("#current_date").html(date)
+
+			$("#email").html("halanm123@gmail.com")
+		})
+	</script>
 
 
 </body>
